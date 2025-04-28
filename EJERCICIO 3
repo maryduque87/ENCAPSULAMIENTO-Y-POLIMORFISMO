@@ -1,0 +1,41 @@
+#EJERCICIO 3 (ENCAPSULAMIENTO)
+class Empleado:
+  def __init__(self, nombre, rol, clave):
+    self.__nombre = nombre
+    self.__rol = rol
+    self.__clave_acceso = self.__cifrar(clave)
+  #metodo de encriptacion y desencriptacion de la clave
+  def __cifrar(self, texto):
+    return texto [::-1] #esto lo que realiza es que invierte la clave si se ingresa hola aloh
+
+  def __descifrar (self, clave_encriptada):
+    return clave_encriptada [::-1]
+
+  #creacion de metodos get
+  @property
+  def nombre(self):
+    return self.__nombre
+
+  @property
+  def rol(self):
+    return self.__rol
+
+#metodo de verificacion de clave
+  def verificar_clave(self, clave_ingresada):
+    clave_encriptada = self.__cifrar(clave_ingresada)
+    return self.__cifrar(clave_ingresada) == self.__clave_acceso
+
+  def cambiar_clave(self, clave_antigua, nueva_clave):
+    if self.verificar_clave(clave_antigua):
+      self.__clave_acceso = self.__cifrar(nueva_clave)
+      return True
+    else:
+      return False
+
+#testing
+
+emp = Empleado("fabian", "sapovisor", "hellokitty")
+print(emp.verificar_clave("hellokitty"))
+emp.cambiar_clave("hellokitty", "kdrama")
+
+print(emp.verificar_clave("kdrama"))
