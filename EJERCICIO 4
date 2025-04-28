@@ -1,0 +1,87 @@
+#EJERCICIO 4 (ENCAPSULAMIENTO)
+# Clase padre
+class Persona:
+    def __init__(self, nombre, edad, documento):
+        self.__nombre = nombre
+        self.__edad = edad
+        self.__documento = documento
+
+    @property
+    def nombre(self):
+        return self.__nombre
+
+    @property
+    def edad(self):
+        return self.__edad
+
+    @edad.setter
+    def edad(self, nueva_edad):
+        if nueva_edad >= 0:
+            self.__edad = nueva_edad
+        else:
+            print("Error: La edad no puede ser negativa.")
+
+    @property
+    def documento(self):
+        return self.__documento
+
+# Clase hija: Paciente
+class Paciente(Persona):
+    def __init__(self, nombre, edad, documento, diagnostico):
+        super().__init__(nombre, edad, documento)
+        self.__diagnostico = diagnostico
+        self.__historial = []
+
+    def agregar_historial(self, entrada):
+        self.__historial.append(entrada)
+
+    def ver_historial(self):
+        return self.__historial
+
+    def ver_diagnostico(self):
+        return self.__diagnostico
+
+# Clase hija: Doctor
+class Doctor(Persona):
+    def __init__(self, nombre, edad, documento, especialidad):
+        super().__init__(nombre, edad, documento)
+        self.__especialidad = especialidad
+
+    def ver_especialidad(self):
+        return self.__especialidad
+
+    def modificar_diagnostico(self, paciente, nuevo_diagnostico):
+        if isinstance(paciente, Paciente):
+            paciente._Paciente__diagnostico = nuevo_diagnostico  # Accediendo atributo privado
+            print(f"Diagnóstico modificado exitosamente.")
+        else:
+            print("Error: Solo se puede modificar el diagnóstico de un paciente.")
+
+# --- Ejemplo de uso automático (sin inputs) ---
+
+# Crear un paciente
+paciente1 = Paciente("MARIA DUQUE", 18, "1046698734", "Gripe")
+
+# Crear un doctor
+doctor1 = Doctor("Dr. Juan Pérez", 45, "87654321", "Medicina General")
+
+# Mostrar diagnóstico inicial
+print(f"Diagnóstico inicial de {paciente1.nombre}: {paciente1.ver_diagnostico()}")
+
+# Agregar entradas al historial del paciente
+paciente1.agregar_historial("Consulta inicial: fiebre y dolor de garganta.")
+paciente1.agregar_historial("Recetado paracetamol y reposo.")
+
+# Mostrar historial
+print(f"Historial médico de {paciente1.nombre}:")
+for entrada in paciente1.ver_historial():
+    print(f"- {entrada}")
+
+# Doctor modifica el diagnóstico
+doctor1.modificar_diagnostico(paciente1, "Faringitis aguda")
+
+# Mostrar diagnóstico actualizado
+print(f"Nuevo diagnóstico de {paciente1.nombre}: {paciente1.ver_diagnostico()}")
+
+# Mostrar especialidad del doctor
+print(f"Especialidad de {doctor1.nombre}: {doctor1.ver_especialidad()}")
