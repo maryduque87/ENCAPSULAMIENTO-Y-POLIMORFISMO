@@ -1,0 +1,38 @@
+#EJERCICIO 2 (ENCAPSULAMIENTO)
+class CarteraCripto:
+    def __init__(self, usuario):
+        self.__usuario = usuario
+        self.__saldo_btc = 0.0
+
+    def consultar_saldo(self):
+        return f"Saldo de {self.__usuario}: {self.__saldo_btc:.8f} BTC"
+
+    def comprar_btc(self, monto_usd, precio_actual_btc):
+        btc_comprados = monto_usd / precio_actual_btc
+        self.__saldo_btc += btc_comprados
+        print(f"Compra exitosa: {btc_comprados:.8f} BTC añadidos.")
+
+    def vender_btc(self, monto_btc, precio_actual_btc):
+        if monto_btc > self.__saldo_btc:
+            print("Error: saldo insuficiente para vender esa cantidad de BTC.")
+        else:
+            usd_recibidos = monto_btc * precio_actual_btc
+            self.__saldo_btc -= monto_btc
+            print(f"Venta exitosa: recibiste ${usd_recibidos:.2f} USD.")
+
+# --- Ejemplo de uso sin inputs del usuario ---
+
+# Crear una cartera para "Alice"
+cartera = CarteraCripto("MARIA CLAUDIA DUQUE CARRILLO")
+
+# Comprar BTC con $1000 cuando el precio es $20,000 por BTC
+cartera.comprar_btc(1000, 20000)
+
+# Consultar saldo después de la compra
+print(cartera.consultar_saldo())
+
+# Vender 0.03 BTC cuando el precio es $25,000 por BTC
+cartera.vender_btc(0.03, 25000)
+
+# Consultar saldo final
+print(cartera.consultar_saldo())
