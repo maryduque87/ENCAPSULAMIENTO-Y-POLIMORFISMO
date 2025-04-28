@@ -1,0 +1,89 @@
+#EJERCICIO 1 (ENCAPSULAMIENTO)
+class Estudiante:
+    def __init__(self, nombre, codigo):
+        self.__nombre = None
+        self.__codigo = None
+        self.__notas = []
+        self.nombre = nombre
+        self.codigo = codigo
+
+    # Propiedad para obtener el nombre
+    @property
+    def nombre(self):
+        return self.__nombre
+
+    # Propiedad para establecer el nombre (validando que no esté vacío)
+    @nombre.setter
+    def nombre(self, valor):
+        if isinstance(valor, str) and valor.strip():
+            self.__nombre = valor.strip()
+        else:
+            raise ValueError("El nombre no puede estar vacío.")
+
+    # Propiedad para obtener el código
+    @property
+    def codigo(self):
+        return self.__codigo
+
+    # Propiedad para establecer el código (validando que sea alfanumérico)
+    @codigo.setter
+    def codigo(self, valor):
+        if isinstance(valor, str) and valor.isalnum():
+            self.__codigo = valor
+        else:
+            raise ValueError("El código debe ser alfanumérico (letras y números sin espacios).")
+
+    # Método para agregar una nota, validando que esté entre 0.0 y 5.0
+    def agregar_nota(self, nota):
+        if isinstance(nota, (int, float)) and 0.0 <= nota <= 5.0:
+            self.__notas.append(float(nota))
+        else:
+            raise ValueError("La nota debe estar entre 0.0 y 5.0.")
+
+    # Método para calcular el promedio de notas
+    def calcular_promedio(self):
+        if self.__notas:
+            return sum(self.__notas) / len(self.__notas)
+        else:
+            return 0.0
+
+    # Método para saber si el estudiante está aprobado (promedio >= 3.0)
+    def es_aprobado(self):
+        return self.calcular_promedio() >= 3.0
+
+    # Método opcional para mostrar todas las notas
+    def mostrar_notas(self):
+        return self.__notas
+
+
+# Ejemplo de uso
+try:
+    estudiante = Estudiante("MARIA DUQUE CARRILLO", "M257")
+    estudiante.agregar_nota(4.0)
+    estudiante.agregar_nota(5.0)
+    estudiante.agregar_nota(4.8)
+
+    print(f"Nombre del estudiante: {estudiante.nombre}")
+    print(f"Código del estudiante: {estudiante.codigo}")
+    print(f"Notas: {estudiante.mostrar_notas()}")
+    print(f"Promedio: {estudiante.calcular_promedio():.2f}")
+    print("¿Aprobado?:", "Sí" if estudiante.es_aprobado() else "No")
+
+except ValueError as error:
+    print("Error:", error)
+
+
+try:
+    estudiante = Estudiante("LORAINE ACOSTA FRIAS", "A387")
+    estudiante.agregar_nota(3.0)
+    estudiante.agregar_nota(3.8)
+    estudiante.agregar_nota(4.8)
+
+    print(f"Nombre del estudiante: {estudiante.nombre}")
+    print(f"Código del estudiante: {estudiante.codigo}")
+    print(f"Notas: {estudiante.mostrar_notas()}")
+    print(f"Promedio: {estudiante.calcular_promedio():.2f}")
+    print("¿Aprobado?:", "Sí" if estudiante.es_aprobado() else "No")
+
+except ValueError as error:
+    print("Error:", error)
