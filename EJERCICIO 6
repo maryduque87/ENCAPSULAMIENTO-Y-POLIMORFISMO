@@ -1,0 +1,60 @@
+
+#EJERCICIO 2 (POLIMORFISMO)
+# Clase base
+class Empleado:
+    def __init__(self, nombre, sueldo_base):
+        self._nombre = nombre            # atributo protegido
+        self._sueldo_base = sueldo_base   # atributo protegido
+
+    # Getter para sueldo_base
+    def get_sueldo_base(self):
+        return self._sueldo_base
+
+    # Setter para sueldo_base
+    def set_sueldo_base(self, nuevo_sueldo):
+        if nuevo_sueldo > 0:
+            self._sueldo_base = nuevo_sueldo
+        else:
+            print("El sueldo debe ser mayor que 0.")
+
+    # Método que será sobreescrito
+    def calcular_salario(self):
+        pass
+
+
+# Clase hija: Empleado Fijo
+class EmpleadoFijo(Empleado):
+    def calcular_salario(self):
+        # Un empleado fijo gana su sueldo base más un bono fijo
+        bono = 500
+        return self.get_sueldo_base() + bono
+
+
+# Clase hija: Empleado por Horas
+class EmpleadoPorHoras(Empleado):
+    def __init__(self, nombre, sueldo_base, horas_trabajadas):
+        super().__init__(nombre, sueldo_base)
+        self.horas_trabajadas = horas_trabajadas
+
+    def calcular_salario(self):
+        # Se paga el sueldo base por cada hora trabajada
+        return self.get_sueldo_base() * self.horas_trabajadas
+
+
+# Clase hija: Empleado Temporal
+class EmpleadoTemporal(Empleado):
+    def calcular_salario(self):
+        # Un empleado temporal gana el 80% de su sueldo base
+        return self.get_sueldo_base() * 0.8
+
+
+# --- Uso de polimorfismo ---
+if __name__ == "__main__":
+    empleados = [
+        EmpleadoFijo("Ana", 3000),
+        EmpleadoPorHoras("Luis", 20, 160),
+        EmpleadoTemporal("Marta", 2500)
+    ]
+
+    for empleado in empleados:
+        print(f"{empleado._nombre} gana: {empleado.calcular_salario()}")
