@@ -1,0 +1,25 @@
+#EJERCICIO 1 (POLIMORFISMO)
+class Tipo_Transporte ():
+  def Transporte (self):
+    pass
+
+class Coche(Tipo_Transporte):
+  def Transporte (self):
+    return "Soy un coche, transporte terrestre"
+
+class Avion(Tipo_Transporte):
+  def Transporte (self):
+    return "Soy un avion, transporte aereo"
+
+class Barco(Tipo_Transporte):
+  def Transporte (self):
+    return "Soy un Barco, transporte maritimo"
+
+
+coche = Coche()
+avion = Avion()
+barco = Barco()
+
+print(coche.Transporte())
+print(avion.Transporte())
+print(barco.Transporte())
